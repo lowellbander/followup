@@ -20,6 +20,9 @@ def index():
         #TODO: validate that this is an actual family
         data = {}
         data['family'] = request.args.get('family')
+        data['guide_review'] = request.args.get('q1')
+        data['wanting'] = request.args.get('q2')
+        data['extraneous'] = request.args.get('q3')
         response = unirest.post(os.environ['CLERK_URL'] + 'followup/', headers=HEADERS,
                                 params = json.dumps(data))
         print response.body
