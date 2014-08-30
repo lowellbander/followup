@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request
+import json
 import os
+import settings
 import unirest
+
+HEADERS = {'Accept':'application/json', 'Content-Type':'application-json'}
 
 app = Flask(__name__)
 app.debug = True
@@ -11,6 +15,19 @@ def get(famID):
 
 @app.route('/')
 def index():
+    #they are submitting the form, so post and redirect
+    if request.args.get('q1') is not None:
+        #post the data
+        #TODO: validate that this is an actual family
+        data = {}
+        data['family'] = request.args.get('family')
+        response = unirest.post(settings.API_URL + 'followup/', headers=HEADERS,
+                                params = json.dumps(data))
+        print response.body
+        #redirect
+        return render_template('submitted.html')
+
+    #they are asking for a new form
     famID = request.args.get('id')
     if famID is None:
         return render_template('index.html')
@@ -21,7 +38,7 @@ def index():
         except TypeError:
             return "invalid ID in URL"
         else:
-            data = {'name': name}
+            data = {'name': name, 'id':famID}
             return render_template('followup.html', data=data)
 
 if __name__ == '__main__':
