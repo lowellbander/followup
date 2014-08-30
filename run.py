@@ -21,7 +21,8 @@ def index():
         except TypeError:
             return "invalid ID in URL"
         else:
-            return render_template('followup.html')
+            data = {'name': name}
+            return render_template('followup.html', data=data)
 
 if __name__ == '__main__':
     app.run()
