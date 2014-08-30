@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
 import json
 import os
-import settings
 import unirest
 
 HEADERS = {'Accept':'application/json', 'Content-Type':'application-json'}
@@ -21,7 +20,7 @@ def index():
         #TODO: validate that this is an actual family
         data = {}
         data['family'] = request.args.get('family')
-        response = unirest.post(settings.API_URL + 'followup/', headers=HEADERS,
+        response = unirest.post(CLERK_URL + 'followup/', headers=HEADERS,
                                 params = json.dumps(data))
         print response.body
         #redirect
