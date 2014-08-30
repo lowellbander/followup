@@ -21,7 +21,7 @@ def index():
         except TypeError:
             return "invalid ID in URL"
         else:
-            return "rendering form for %s ..." % name
+            return render_template('followup.html')
 
 if __name__ == '__main__':
     app.run()
