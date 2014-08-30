@@ -20,7 +20,7 @@ def index():
         #TODO: validate that this is an actual family
         data = {}
         data['family'] = request.args.get('family')
-        response = unirest.post(CLERK_URL + 'followup/', headers=HEADERS,
+        response = unirest.post(os.environ['CLERK_URL'] + 'followup/', headers=HEADERS,
                                 params = json.dumps(data))
         print response.body
         #redirect
